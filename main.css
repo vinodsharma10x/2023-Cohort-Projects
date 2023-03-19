@@ -1,0 +1,11 @@
+body{
+    background-image: url('images/ravi-pinisetti-1zikZJVXSfA-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+.navbar-nav {
+    gap: 2rem;
+}
+
