@@ -1,6 +1,15 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
+#Django
+*.log
+*.pot
+*.pyc
+__pycache__
+__pycache__/
+db.sqlite3
+media
+
 ### Node ###
 # Logs
 logs
