@@ -1,15 +1,23 @@
 import requests
+import json
 
-# Move to secrets file later
-# Flights api keys
-X_RapidAPI_Key = 'e5271c74c7msh336578886b36ce5p1b7fb3jsnf74ff4318717'
-X_RapidAPI_Host = "priceline-com-provider.p.rapidapi.com"
-
-# Attractions api keys
-attractions_api_key = '5ae2e3f221c38a28845f05b60ffcf38d0eecc62a698a2c6e2d0c58fe'
-
+config = json.load("secrets.json")
 
 class FlightsAPI():
+
+    def get_airports_near_city(city):
+        # city min length = 3, max length = 50
+        url = "https://priceline-com-provider.p.rapidapi.com/v1/flights/locations"
+        querystring = {"name": city}
+
+        headers = {
+            "X-RapidAPI-Key": config['api']['flights']['api_key'],
+            "X-RapidAPI-Host": config['api']['flights']['api_host']
+        }
+
+        response = requests.get(url, headers=headers, params=querystring)
+        return response
+
     def get_flights(departure_date, origin_airport_code, destination_airport_code):
 
         url = "https://priceline-com-provider.p.rapidapi.com/v2/flight/roundTrip"
@@ -18,8 +26,8 @@ class FlightsAPI():
                        "destination_airport_code": destination_airport_code, "origin_airport_code": origin_airport_code}
 
         headers = {
-            "X-RapidAPI-Key": X_RapidAPI_Key,
-            "X-RapidAPI-Host": X_RapidAPI_Host
+            "X-RapidAPI-Key": config['api']['flights']['api_key'],
+            "X-RapidAPI-Host": config['api']['flights']['api_host']
         }
 
         response = requests.get(url, headers=headers, params=querystring)
@@ -34,6 +42,7 @@ class AttractionsAPI():
         pass
 
     def get_attractions_by_city(city):
+        attractions_api_key = config['api']['attractions']['api_key']
         get_coordinates_url = f'https://api.opentripmap.com/0.1/en/places/geoname?name={city}&apikey={attractions_api_key}'
 
         r = requests.get(get_coordinates_url)
@@ -47,4 +56,6 @@ class AttractionsAPI():
         radius = 48280  # 4820 km = 30 miles
         get_places_url = f'https://api.opentripmap.com/0.1/en/places/radius?radius={radius}&lon={longitude}&lat={latitude}&apikey={attractions_api_key}'
         response = requests.get(get_places_url)
+        f = open('get_attractions_by_city.json', 'w')
+        f.write(json.dumps(response.json()))
         return response
