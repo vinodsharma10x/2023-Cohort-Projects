@@ -1,0 +1,40 @@
+from rest_framework import serializers
+from .models import Itinerary, Attraction, Flight
+
+
+class FlightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Flight
+        fields = ['id', 'itinerary', 'origin_airport_code', 'destination_airport_code', 'departure_datetime', 'arrival_datetime', 'type']
+
+
+class AttractionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attraction
+        fields = ['id', 'name', 'itinerary']
+
+
+class ItinerarySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Itinerary
+        fields = ('id', 'name', 'flights', 'attractions')
+
+    flights = FlightSerializer(many=True, read_only=True)
+    attractions = AttractionSerializer(many=True, read_only=True)
+
+
+# class ItinerarySerializer_basic(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = Itinerary
+#         fields = ['id', 'name']
+
+
+# Original, could be used to to GET all fields:
+# class ItinerarySerializer(serializers.ModelSerializer):
+#     attractions = AttractionSerializer(many=True)
+#     flights = FlightSerializer(many=True)
+
+#     class Meta:
+#         model = Itinerary
+#         fields = ['id', 'name', 'attractions', 'flights']

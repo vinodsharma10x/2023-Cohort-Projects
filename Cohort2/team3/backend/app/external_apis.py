@@ -1,7 +1,19 @@
 import requests
 import json
 
-config = json.load("secrets.json")
+config = {
+  "api": {
+    "flights": {
+      "api_key": "e5271c74c7msh336578886b36ce5p1b7fb3jsnf74ff4318717",
+      "api_host": "priceline-com-provider.p.rapidapi.com"
+    },
+    "attractions": {
+      "api_key": "5ae2e3f221c38a28845f05b60ffcf38d0eecc62a698a2c6e2d0c58fe"
+    }
+  }
+}
+
+
 
 class FlightsAPI():
 
@@ -37,25 +49,21 @@ class FlightsAPI():
 
 class AttractionsAPI():
 
-    def get_coordinates_by_city(city):
-        # refactor get_attractions_by_city? can split functions into 2
-        pass
-
-    def get_attractions_by_city(city):
+    def get_coordinates_of_city(city):
         attractions_api_key = config['api']['attractions']['api_key']
         get_coordinates_url = f'https://api.opentripmap.com/0.1/en/places/geoname?name={city}&apikey={attractions_api_key}'
 
         r = requests.get(get_coordinates_url)
 
-        if r.status_code != 200:
-            return "return error here"
 
-        data = r.json()
-        latitude = data['lat']
-        longitude = data['lon']
-        radius = 48280  # 4820 km = 30 miles
+    def get_attractions_of_city(radius, longitude, latitude, attractions_api_key):
         get_places_url = f'https://api.opentripmap.com/0.1/en/places/radius?radius={radius}&lon={longitude}&lat={latitude}&apikey={attractions_api_key}'
         response = requests.get(get_places_url)
-        f = open('get_attractions_by_city.json', 'w')
-        f.write(json.dumps(response.json()))
+        return response
+
+    def get_attraction_details(xid):
+        attractions_api_key = config['api']['attractions']['api_key']
+        get_attraction_details_url = f'https://api.opentripmap.com/0.1/en/places/xid/{xid}?apikey={attractions_api_key}'
+
+        response = requests.get(get_attraction_details_url)
         return response
