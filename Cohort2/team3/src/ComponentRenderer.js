@@ -4,15 +4,9 @@ import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 
 import LandingPage from "pages/Home.js";
 
-import HotelTravelLandingPageImageSrc from "images/demo/HotelTravelLandingPage.jpeg";
-
 import LoginPage from "pages/Login.js";
 import SignupPage from "pages/Signup.js";
 import AboutUsPage from "pages/AboutUs.js";
-
-import LoginPageImageSrc from "images/demo/LoginPage.jpeg";
-import SignupPageImageSrc from "images/demo/SignupPage.jpeg";
-import AboutUsPageImageSrc from "images/demo/AboutUsPage.jpeg";
 
 import BackgroundAsImageWithCenteredContentHero from "components/hero/BackgroundAsImageWithCenteredContent.js";
 
@@ -24,7 +18,7 @@ export const components = {
   landingPages: {
     HotelTravelLandingPage: {
       component: LandingPage,
-      imageSrc: HotelTravelLandingPageImageSrc,
+
       url: "pages/LandingPage",
     },
   },
@@ -32,20 +26,19 @@ export const components = {
   innerPages: {
     LoginPage: {
       component: LoginPage,
-      imageSrc: LoginPageImageSrc,
+
       scrollAnimationDisabled: true,
       url: "/components/innerPages/LoginPage",
     },
     SignupPage: {
       component: SignupPage,
       url: `/components/innerPages/SignupPage`,
-      imageSrc: SignupPageImageSrc,
+
       scrollAnimationDisabled: true,
     },
     AboutUsPage: {
       component: AboutUsPage,
       url: `/components/innerPages/AboutUsPage`,
-      imageSrc: AboutUsPageImageSrc,
     },
   },
 
