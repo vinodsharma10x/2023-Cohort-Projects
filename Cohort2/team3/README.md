@@ -1,5 +1,6 @@
 Project Team
 
+=======
 Ryan Ybarra - Java
 
 Raeshelle Rose - JavaScript, MERN, learning python & sql
@@ -11,11 +12,10 @@ Carson Butler - Django, React, MySQL, Linux. Also a little familiar with spring 
 Vinod Sharma - C#, Python, ASP.net, MS SQL
 
 Week 3 goals
-
-    Install & configure tech - Django, React, Web Identity Framework (Google Login), Database - PostgreSQL or Amazon DynamoDB?
-    Tools - VS Code
-    Configure GitHub on your local machine
-    Create a folder for frontend and backend
-    Create either a login page or a home page
-    Create wireframes
-    Select travel API that we will use - which will return flights and activities to do
+1. Install & configure tech - Django, React, Web Identity Framework (Google Login), Database - PostgreSQL or Amazon DynamoDB?
+2. Tools - VS Code
+3. Configure GitHub on your local machine
+4. Create a folder for frontend and backend
+5. Create either a login page or a home page
+6. Create wireframes
+7. Select travel API that we will use - which will return flights and activities to do
