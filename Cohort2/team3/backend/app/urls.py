@@ -14,5 +14,5 @@ urlpatterns = [
     path('', include(router.urls)),
 
     # #External APIs
-    path('flights/search/', views.FindFlightsView.as_view()),
+    path('ext/flights/', views.FindFlightsView.as_view()),
 ]
