@@ -52,41 +52,39 @@ export default ({
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   cards = [
     {
-      imageSrc:
-        "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
+      imageSrc: "https://avatars.githubusercontent.com/u/122154785?v=4",
       position: "Team Lead",
-      name: "Vinod",
+      name: "Vinod Sharma",
       links: [
         {
-          url: "https://twitter.com",
+          url: "https://twitter.com/VinodSharma10x",
           icon: TwitterIcon,
         },
         {
-          url: "https://linkedin.com",
+          url: "https://www.linkedin.com/in/vinodsharma10x/",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/vinodsharma10x",
           icon: GithubIcon,
         },
       ],
     },
     {
-      imageSrc:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
+      imageSrc: "https://avatars.githubusercontent.com/u/93204000?v=4",
       position: "Front End Developer",
       name: "Raeshelle Rose",
       links: [
+        // {
+        //   url: "https://twitter.com",
+        //   icon: TwitterIcon,
+        // },
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
-          url: "https://linkedin.com",
+          url: "https://www.linkedin.com/in/raeshellerose/",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/raeplusplus",
           icon: GithubIcon,
         },
       ],
@@ -95,14 +93,14 @@ export default ({
       imageSrc:
         "https://images.unsplash.com/photo-1517070208541-6ddc4d3efbcb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
       position: "Backend Developer",
-      name: "Carson",
+      name: "Carson Butler",
       links: [
+        // {
+        //   url: "https://twitter.com",
+        //   icon: TwitterIcon,
+        // },
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
-          url: "https://linkedin.com",
+          url: "https://www.linkedin.com/in/carsontbutler",
           icon: LinkedinIcon,
         },
         {
@@ -115,18 +113,18 @@ export default ({
       imageSrc:
         "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=2.95&w=512&h=512&q=80",
       position: "Backend / Cloud Developer",
-      name: "YooJin",
+      name: "YooJin Bae",
       links: [
+        // {
+        //   url: "https://twitter.com",
+        //   icon: TwitterIcon,
+        // },
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
-          url: "https://linkedin.com",
+          url: "https://www.linkedin.com/in/bae-yoojin/",
           icon: LinkedinIcon,
         },
         {
-          url: "https://github.com",
+          url: "https://github.com/yoojin93",
           icon: GithubIcon,
         },
       ],
@@ -135,14 +133,14 @@ export default ({
       imageSrc:
         "https://images.unsplash.com/photo-1546820389-44d77e1f3b31?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&facepad=3.45&w=512&h=512&q=80",
       position: "Jr. Developer",
-      name: "Ryan",
+      name: "Ryan Ybarra",
       links: [
+        // {
+        //   url: "https://twitter.com",
+        //   icon: TwitterIcon,
+        // },
         {
-          url: "https://twitter.com",
-          icon: TwitterIcon,
-        },
-        {
-          url: "https://linkedin.com",
+          url: "https://www.linkedin.com/in/ryan-ybarra-24b69295/",
           icon: LinkedinIcon,
         },
         {
