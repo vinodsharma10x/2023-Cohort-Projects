@@ -44,7 +44,7 @@ const IllustrationImage = styled.div`
 export default ({
   logoLinkUrl = "#",
   illustrationImageSrc = illustration,
-  headingText = "Sign In To TravelSite!",
+  headingText = "Sign In To Trip Sage",
   socialButtons = [
     {
       iconImageSrc: googleIconImageSrc,
