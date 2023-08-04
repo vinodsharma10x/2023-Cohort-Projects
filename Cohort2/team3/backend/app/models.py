@@ -4,7 +4,7 @@ from django.conf import settings
 
 class Itinerary(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, default="untitled")
+    name = models.CharField(max_length=200)
 
     class Meta:
         verbose_name_plural = "itineraries"
@@ -16,6 +16,7 @@ class Itinerary(models.Model):
 class Attraction(models.Model):
     name = models.CharField(max_length=300)
     itinerary = models.ForeignKey("Itinerary", related_name="attractions", on_delete=models.CASCADE)
+    start_datetime = models.DateTimeField()
 
 class Flight(models.Model):
     TYPE_CHOICES = [
