@@ -23,14 +23,14 @@ export default () => {
         <Row>
           <LogoContainer>
             {/* <LogoImg src={logo} /> */}
-            <LogoText>TravelSite!</LogoText>
+            <LogoText>Trip Sage</LogoText>
           </LogoContainer>
           <LinksContainer>
             <Link href="/home">Home</Link>
             <Link href="/about-us">About</Link>
           </LinksContainer>
           <CopyrightText>
-            &copy; Copyright 2023, TravelSite! Inc. All Rights Reserved.
+            &copy; Copyright 2023, Trip Sage Inc. All Rights Reserved.
           </CopyrightText>
         </Row>
       </Content>
