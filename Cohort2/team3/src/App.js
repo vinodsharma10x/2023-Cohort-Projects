@@ -9,10 +9,11 @@ import Signup from "pages/Signup";
 import AboutUs from "pages/AboutUs";
 import Search from "pages/Search.js";
 import Home from "pages/Home.js";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export default function App() {
   return (
-    <>
+    <GoogleOAuthProvider>
       <GlobalStyles />
       <Router>
         <Routes>
@@ -31,6 +32,6 @@ export default function App() {
           <Route path="/home" element={<Home />}></Route>
         </Routes>
       </Router>
-    </>
+    </GoogleOAuthProvider>
   );
 }

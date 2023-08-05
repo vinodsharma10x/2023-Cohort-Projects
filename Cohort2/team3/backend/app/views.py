@@ -148,9 +148,10 @@ class FindFlightsView(APIView):
     def post(self, request):
         origin_city = request.data.get('origin')
         destination_city = request.data.get('destination')
+        departure_date = request.data.get('date')
 
-        if origin_city is None or destination_city is None:
-            return Response({"message": "No city found in request"}, status=status.HTTP_400_BAD_REQUEST)
+        if origin_city is None or destination_city is None or departure_date is None:
+            return Response({"message": "Origin city, destination city, and date are required."}, status=status.HTTP_400_BAD_REQUEST)
         
         r = FlightsAPI.get_airports_near_city(origin_city)
         if not r.ok:
@@ -164,7 +165,7 @@ class FindFlightsView(APIView):
 
         r = FlightsAPI.get_airports_near_city(destination_city)
         if not r.ok:
-            return Response({"message": "API service currently unavailable"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response({"message": "Service currently unavailable"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         
         destination_airport_data = r.json()
         if len(destination_airport_data) < 1:
@@ -172,12 +173,10 @@ class FindFlightsView(APIView):
         
         destination_airports = [item['id'] for item in destination_airport_data if item['subType'] == 'AIRPORT']
 
-        # TO DO: add the date field to the request params at the top
-        # Then at this point, I will send the data to the next external endpoint to get flights
-        # Should the airports be returned to User before this request and have them select 1?
-        # Or just send it all back at once
+        departures_req = FlightsAPI.get_flights()
 
-        return Response()
+
+        return Response({"data": destination_airports})
 
 
 

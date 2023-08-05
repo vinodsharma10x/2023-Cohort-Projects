@@ -44,8 +44,6 @@ const IllustrationImage = styled.div`
 
 const base_url = "http://localhost:8000"; //Change once deployed
 
-const [myToken, setMyToken]
-
 const sendToken = (token) => {
   console.log(token);
   fetch(`${base_url}/auth/dj-rest-auth/google/`, {
@@ -66,7 +64,7 @@ const sendToken = (token) => {
       //Data returned, which should have the key:
       console.log(data);
       console.log(data.key); //This is the key you will store and use in future requests to the backend
-      setMyToken(data.key);
+      // setMyToken(data.key);
     });
 };
 
@@ -89,7 +87,7 @@ const onFailure = () => {
 
 //example for how to send the token in the requests
 const sampleRequest = () => {
-  const token = myToken; // access the token however you chose to store it
+  const token = ""; // access the token however you chose to store it
   fetch(`${base_url}/some/endpoint/that/requires/authentication`, {
     method: "GET",
     headers: {
