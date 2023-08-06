@@ -15,4 +15,5 @@ urlpatterns = [
 
     # #External APIs
     path('ext/flights/', views.FindFlightsView.as_view()),
+    path('ext/attractions/', views.FindAttractionsView.as_view()),
 ]

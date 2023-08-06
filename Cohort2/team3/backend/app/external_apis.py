@@ -30,7 +30,7 @@ class FlightsAPI():
         response = requests.get(url, headers=headers, params=querystring)
         return response
 
-    def get_flights(departure_date, origin_airport_code, destination_airport_code):
+    def get_flights(origin_airport_code, destination_airport_code, departure_date):
 
         url = "https://priceline-com-provider.p.rapidapi.com/v2/flight/roundTrip"
 
@@ -53,10 +53,12 @@ class AttractionsAPI():
         attractions_api_key = config['api']['attractions']['api_key']
         get_coordinates_url = f'https://api.opentripmap.com/0.1/en/places/geoname?name={city}&apikey={attractions_api_key}'
 
-        r = requests.get(get_coordinates_url)
+        response = requests.get(get_coordinates_url)
+        return response
 
 
-    def get_attractions_of_city(radius, longitude, latitude, attractions_api_key):
+    def get_attractions_of_city(radius, longitude, latitude):
+        attractions_api_key = config['api']['attractions']['api_key']
         get_places_url = f'https://api.opentripmap.com/0.1/en/places/radius?radius={radius}&lon={longitude}&lat={latitude}&apikey={attractions_api_key}'
         response = requests.get(get_places_url)
         return response
