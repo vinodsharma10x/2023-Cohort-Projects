@@ -3,10 +3,10 @@ import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 
 import Hero from "components/hero/TwoColumnWithInput";
 
-export default () => {
+export default ({ setDepartureFlightData }) => {
   return (
     <AnimationRevealPage>
-      <Hero />
+      <Hero setDepartureFlightData={setDepartureFlightData}/>
     </AnimationRevealPage>
   );
 };

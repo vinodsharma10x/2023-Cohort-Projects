@@ -25,7 +25,7 @@ const StyledHeader = styled(Header)`
 const PrimaryLink = tw(PrimaryLinkBase)`rounded-full`;
 const Container = styled.div`
   ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen min-h-144`}
-  background-image: url("https://images.unsplash.com/photo-1536300007881-7e482242baa5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80");
+  background-image: url("https://cdn.pixabay.com/photo/2017/09/04/16/58/passport-2714675_1280.jpg");
 `;
 
 const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-black opacity-75`;
@@ -45,11 +45,8 @@ const PrimaryAction = tw.button`rounded-full px-8 py-3 mt-10 text-sm sm:text-bas
 export default () => {
   const navLinks = [
     <NavLinks key={1}>
-      <NavLink href="/login">Login</NavLink>
-      <NavLink href="/signup">Signup</NavLink>
-    </NavLinks>,
-    <NavLinks key={2}>
-      <PrimaryLink href="/about-us">Hire Us</PrimaryLink>
+      {/* does not work out right now */}
+      <NavLink href="/signup">Sign Out</NavLink>
     </NavLinks>,
   ];
 
@@ -60,12 +57,16 @@ export default () => {
         <StyledHeader links={navLinks} />
         <Content>
           <Heading>
-            Book Travel & Attractions
+            Plan your trip
             <br />
             anywhere around the world
           </Heading>
           <PrimaryAction>
-            <a href="/search">Search</a>
+            <a href="/search">Create New Travel Plan</a>
+          </PrimaryAction>
+          <PrimaryAction>
+            {/* does not work right now */}
+            <a href="/plans">View Past Plans</a>
           </PrimaryAction>
         </Content>
       </HeroContainer>

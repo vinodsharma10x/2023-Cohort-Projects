@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
 
-// import logo from "../../images/logo.svg";
+import logo from "../../images/logo.svg";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
@@ -37,7 +37,7 @@ export const LogoLink = styled(NavLink)`
   }
 `;
 
-export const MobileNavLinksContainer = tw.nav`flex flex-1 items-center justify-between`;
+export const MobileNavLinksContainer = tw.nav``;
 export const NavToggle = tw.button`
   lg:hidden z-20 focus:outline-none hocus:text-primary-500 transition duration-300
 `;
@@ -76,7 +76,7 @@ export default ({
 
   const defaultLogoLink = (
     <LogoLink href="/">
-      {/* <img src={logo} alt="logo" /> */}
+      <img src={logo} alt="logo" />
       Trip Sage
     </LogoLink>
   );
@@ -87,7 +87,6 @@ export default ({
   return (
     <Header className={className || "header-light"}>
       <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
-        {logoLink}
         {links}
       </DesktopNavLinks>
 
@@ -102,16 +101,6 @@ export default ({
         >
           {links}
         </MobileNavLinks>
-        <NavToggle
-          onClick={toggleNavbar}
-          className={showNavLinks ? "open" : "closed"}
-        >
-          {showNavLinks ? (
-            <CloseIcon tw="w-6 h-6" />
-          ) : (
-            <MenuIcon tw="w-6 h-6" />
-          )}
-        </NavToggle>
       </MobileNavLinksContainer>
     </Header>
   );
