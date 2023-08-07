@@ -151,8 +151,9 @@ REST_FRAMEWORK = {
 SITE_ID = 1
 
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ("http://localhost:3000", "http://localhost")
+CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = ['*']
+# CORS_ORIGIN_WHITELIST = ("http://localhost:3000", "http://localhost")
 
 DATETIME_FORMAT="%Y-%m-%d%H:%M:%S"
 
