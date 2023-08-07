@@ -6,19 +6,6 @@ import { GoogleLogin } from "@react-oauth/google";
 
 function GoogleAuth() {
 
-  // How the auth works on the frontend:
-  // It uses react-oauth/google: https://www.npmjs.com/package/@react-oauth/google
-
-  // If the user logs in successfully through the Google button, Google will return us an access token.
-  // Once this happens, the "onSuccess()" function down below will run automatically.
-  // onSuccess() then calls the sendToken() function, which uses the access token we got from from google and
-  // sends it to our backend endpoint /auth/dj-rest-auth/google, which then  receives the token and verifies it
-  // If the token is valid, it will return a *different* token back to our frontend. 
-  // This new token can be stored on the frontend (cookies or localstorage, however you want to do it) and is used for future requests.
-
-  // Also, you don't really have to separate the "onSuccess" and "sendToken" functions like I did. 
-  // You could just move the code from the sendToken function to the onSuccess function if you want. 
-
   const base_url = 'http://localhost:8000' //Change once deployed
 
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import GlobalStyles from "styles/GlobalStyles";
 
 import ComponentRenderer from "ComponentRenderer.js";
@@ -10,10 +10,13 @@ import AboutUs from "pages/AboutUs";
 import Search from "pages/Search.js";
 import Home from "pages/Home.js";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import AuthContext from "auth/auth-context";
 
-export default function App() {
+const App = () => {
+  const authCtx = useContext(AuthContext);
+
   return (
-    <GoogleOAuthProvider>
+    <GoogleOAuthProvider clientId="32101593679-er9qgunfqs07mml1sn113kch610knpah.apps.googleusercontent.com">
       <GlobalStyles />
       <Router>
         <Routes>
@@ -27,11 +30,25 @@ export default function App() {
           />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Login />} />
+          
+          {authCtx.isLoggedIn ? (
+            <>
+            <Route path="/home" element={<Home />}></Route>
+            <Route path="/" element={<Home />} />
+            </>
+          ) : (
+            <>
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Login />}></Route>
+            </>
+            
+          )}
+
           <Route path="/search" element={<Search />} />
-          <Route path="/home" element={<Home />}></Route>
         </Routes>
       </Router>
     </GoogleOAuthProvider>
   );
-}
+};
+
+export default App;
