@@ -36,7 +36,7 @@ class FlightsAPI():
         url = "https://priceline-com-provider.p.rapidapi.com/v2/flight/roundTrip"
 
         querystring = {"sid": "iSiX639", "adults": "1", "departure_date": departure_date,
-                       "destination_airport_code": destination_airport_code, "origin_airport_code": origin_airport_code}
+                       "destination_airport_code": destination_airport_code, "origin_airport_code": origin_airport_code, "results_per_page":"8"}
 
         headers = {
             "X-RapidAPI-Key": config['api']['flights']['api_key'],

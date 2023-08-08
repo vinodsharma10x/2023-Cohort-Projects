@@ -15,7 +15,6 @@ User = CustomUser
 
 # Itinerary views
 
-
 class ItineraryViewSet(viewsets.ModelViewSet):
     queryset = Itinerary.objects.all()
     serializer_class = serializers.ItinerarySerializer
@@ -30,9 +29,19 @@ class ItineraryViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         if self.request.user.is_authenticated:
             serializer.save(owner=self.request.user)
-        else:
-            serializer.save()
 
+    def create(self, request, *args, **kwargs):
+        user = self.request.user
+        serializer = self.get_serializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+        new_itinerary = request.data.get('name')
+        print(new_itinerary)
+        if len(self.queryset.filter(name=new_itinerary)) == 0:
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response({"message": "An itinerary with this name already exists for this user"}, status=status.HTTP_400_BAD_REQUEST)
 
 class AttractionViewSet(viewsets.ModelViewSet):
     queryset = Attraction.objects.all()
