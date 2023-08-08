@@ -146,8 +146,8 @@ class FindFlightsView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        origin_city = request.data.get('origin')
-        destination_city = request.data.get('destination')
+        origin_city = request.data.get('origin').upper()
+        destination_city = request.data.get('destination').upper()
         departure_date = request.data.get('departure_date')
         return_date = request.data.get('return_date')
 
@@ -159,12 +159,18 @@ class FindFlightsView(APIView):
         # Get departure flight plans
         departure_req = FlightsAPI.get_flights(
             origin_city, destination_city, departure_date)
-        print(departure_req)
-        print(departure_req.text)
+        
+        
         if not departure_req.ok:
             return Response({"message": "Bad request"}, status=status.HTTP_400_BAD_REQUEST)
-
+        
         departure_results = departure_req.json()
+        if departure_results['getAirFlightRoundTrip'].get('error'):
+            if departure_results['getAirFlightRoundTrip'].get('error').get('status'):
+                error = departure_results['getAirFlightRoundTrip'].get('error').get('status')
+                return Response({"message": error}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "No flights found"}, status=status.HTTP_200_OK)
+            
         departure_results_full = departure_results['getAirFlightRoundTrip']['results']['result']['itinerary_data']
         
         flight_plans = {'departure_plans': [departure_results_full[itinerary]['slice_data']
