@@ -159,6 +159,8 @@ class FindFlightsView(APIView):
         # Get departure flight plans
         departure_req = FlightsAPI.get_flights(
             origin_city, destination_city, departure_date)
+        print(departure_req)
+        print(departure_req.text)
         if not departure_req.ok:
             return Response({"message": "Bad request"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -244,55 +246,3 @@ class FindAttractionsView(APIView):
         attraction_data = attraction_req.json()
 
         return Response({"data": attraction_data}, status=status.HTTP_200_OK)
-
-# no longer using since it won't work with frontend setup
-# class FindFlightsView(APIView):
-#     queryset = Flight.objects.all()
-#     permission_classes = [IsAuthenticated]
-
-#     def post(self, request):
-#         origin_city = request.data.get('origin')
-#         destination_city = request.data.get('destination')
-#         departure_date = request.data.get('departure_date')
-#         return_date = request.data.get('return_date')
-
-#         if origin_city is None or destination_city is None or departure_date is None or return_date is None:
-#             return Response({"message": "Origin city, destination city, and date are required."}, status=status.HTTP_400_BAD_REQUEST)
-
-#         r = FlightsAPI.get_airports_near_city(origin_city)
-#         if not r.ok:
-#             return Response({"message": "API service currently unavailable"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-
-#         origin_airport_data = r.json()
-#         if len(origin_airport_data) < 1:
-#             return Response({"message": f'No airports found for city {origin_city}'}, status=status.HTTP_400_BAD_REQUEST)
-
-#         origin_airports = [item['id'] for item in origin_airport_data if item['subType'] == 'AIRPORT']
-
-#         r = FlightsAPI.get_airports_near_city(destination_city)
-#         if not r.ok:
-#             return Response({"message": "Service currently unavailable"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-
-#         destination_airport_data = r.json()
-#         if len(destination_airport_data) < 1:
-#             return Response({"message": f'No airports found for city {destination_city}'}, status=status.HTTP_400_BAD_REQUEST)
-
-#         destination_airports = [item['id'] for item in destination_airport_data if item['subType'] == 'AIRPORT']
-
-#         for origin_airport_code in origin_airports:
-#             for destination_airport_code in destination_airports:
-#                 r = FlightsAPI.get_flights(departure_date, return_date, origin_airport_code, destination_airport_code)
-#                 print(departure_date, return_date, origin_airport_code, destination_airport_code)
-#                 print(r)
-#                 print(r.status_code)
-#                 print(r.text)
-#                 print('--END--')
-
-#         origin_flights = []
-#         return_flights = []
-
-
-#         return Response({"data": destination_airports})
-
-
-

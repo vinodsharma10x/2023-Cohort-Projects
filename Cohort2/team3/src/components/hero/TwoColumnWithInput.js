@@ -69,21 +69,22 @@ export default ({ setDepartureFlightData }) => {
     }
   }
 
-  function handleClick () {
+  function handleClick (e) {
+    e.preventDefault();
     // send request to API/backend to create itinerary, currently not working, needs user id
-    // fetch('localhost:8000/api/v1/itineraries/', {
-    //   method: 'POST',
-    //   mode: "cors",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Authorization": "Token " + authCtx.token
-    //   },
-    //   body: {
-    //     name: itinerary
-    //   }
-    // })
-    // .then(data => data.json())
-    // .then(data => setItineraryId(data));
+    fetch('http://localhost:8000/api/v1/itineraries/', {
+      method: 'POST',
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + authCtx.token
+      },
+      body: JSON.stringify({
+        name: itinerary
+      })
+    })
+    .then(data => data.json())
+    .then(data => setItineraryId(data));
 
     fetch('http://localhost:8000/api/v1/ext/flights/', {
       method: 'POST',
@@ -100,6 +101,7 @@ export default ({ setDepartureFlightData }) => {
     })
     .then(data => data.json())
     .then(data => {
+      console.log(data);
       setDepartureFlightData(data.data.departure_flight_plans.filter(el => el.length === 1));
       setReturnFlightData(data.data.return_flight_plans.filter(el => el.length === 1));
     });
