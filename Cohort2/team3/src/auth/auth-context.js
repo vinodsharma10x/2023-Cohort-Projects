@@ -5,6 +5,8 @@ const AuthContext = React.createContext({
   isLoggedIn: false,
   login: (token, userId) => {},
   logout: () => {},
+  base_url: "", //api url
+  homepage_url: "" //frontend homepage
 });
 
 export const AuthContextProvider = (props) => {
@@ -27,12 +29,16 @@ export const AuthContextProvider = (props) => {
     localStorage.setItem("token", token);
   };
 
+  const base_url = "http://localhost:8000"
+  const homepage_url = "http://localhost:3000"
   const contextValue = {
     token: token,
     userId: userId,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
-    logout: logoutHandler
+    logout: logoutHandler,
+    base_url: base_url,
+    homepage_url
   };
 
   return (

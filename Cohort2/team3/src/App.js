@@ -3,7 +3,12 @@ import GlobalStyles from "styles/GlobalStyles";
 
 import ComponentRenderer from "ComponentRenderer.js";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Login from "pages/Login";
 import Signup from "pages/Signup";
 import AboutUs from "pages/AboutUs";
@@ -22,6 +27,7 @@ const App = () => {
       <GlobalStyles />
       <Router>
         <Routes>
+          <Route path="*" element={<Navigate to="/" />} />
           <Route
             path="/components/:type/:subtype/:name"
             element={<ComponentRenderer />}
@@ -31,23 +37,40 @@ const App = () => {
             element={<ComponentRenderer />}
           />
           <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/signup" element={<Signup />} />
-          
+          {/* <Route path="/signup" element={<Signup />} /> */}
+
           {authCtx.isLoggedIn ? (
+            //Routes while logged in
             <>
-            <Route path="/home" element={<Home />}></Route>
-            <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Navigate to="/" />} />
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/search"
+                element={
+                  <Search setDepartureFlightData={setDepartureFlightData} />
+                }
+              />
             </>
           ) : (
+            //Routes if logged out
             <>
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Login />}></Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/search"
+                element={
+                  <Navigate to="/login" />
+                }
+              />
             </>
-            
           )}
 
-          <Route path="/search" element={<Search setDepartureFlightData={setDepartureFlightData}/>} />
-          <Route path="/flightsDepartures" element={<FlightsDepartures departureFlightData={departureFlightData}/>} />
+          <Route
+            path="/flightsDepartures"
+            element={
+              <FlightsDepartures departureFlightData={departureFlightData} />
+            }
+          />
         </Routes>
       </Router>
     </GoogleOAuthProvider>
