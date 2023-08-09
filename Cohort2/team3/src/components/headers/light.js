@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -8,6 +8,8 @@ import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
 import logo from "../../images/logo.svg";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+
+import AuthContext from "auth/auth-context.js";
 
 const Header = tw.header`
   flex justify-between items-center
@@ -60,14 +62,36 @@ export default ({
   className,
   collapseBreakpointClass = "lg",
 }) => {
+  const authCtx = useContext(AuthContext);
+
   const defaultLinks = [
     <NavLinks key={1}>
       <NavLink href="/login" tw="lg:ml-12!">
         Login
       </NavLink>
-      <PrimaryLink css={roundedHeaderButton && tw`rounded-full`} href="/signup">
-        Sign Up
-      </PrimaryLink>
+    </NavLinks>,
+  ];
+
+  const signOut = () => {
+    fetch(`${authCtx.base_url}/auth/dj-rest-auth/logout/`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Token " + authCtx.token,
+      },
+    }).then(authCtx.logout());
+  };
+
+  const loggedInLinks = [
+    <NavLinks key={1}>
+      <NavLink onClick={signOut}>Sign Out</NavLink>
+    </NavLinks>,
+  ];
+
+  const loggedOutLinks = [
+    <NavLinks key={1}>
+      <NavLink onClick={signOut}>Sign Out</NavLink>
     </NavLinks>,
   ];
 
@@ -82,7 +106,9 @@ export default ({
     </LogoLink>
   );
 
+
   logoLink = logoLink || defaultLogoLink;
+  authCtx.isLoggedIn ? (links = loggedInLinks) : (links = loggedOutLinks)
   links = links || defaultLinks;
 
   return (

@@ -18,7 +18,7 @@ User = CustomUser
 class ItineraryViewSet(viewsets.ModelViewSet):
     queryset = Itinerary.objects.all()
     serializer_class = serializers.ItinerarySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
@@ -46,7 +46,7 @@ class ItineraryViewSet(viewsets.ModelViewSet):
 class AttractionViewSet(viewsets.ModelViewSet):
     queryset = Attraction.objects.all()
     serializer_class = serializers.AttractionSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
@@ -101,7 +101,7 @@ class AttractionViewSet(viewsets.ModelViewSet):
 class FlightViewSet(viewsets.ModelViewSet):
     queryset = Flight.objects.all()
     serializer_class = serializers.FlightSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
@@ -153,7 +153,7 @@ class FlightViewSet(viewsets.ModelViewSet):
 # External APIs
 class FindFlightsView(APIView):
     queryset = Flight.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         origin_city = request.data.get('origin').upper()
@@ -243,7 +243,7 @@ class FindFlightsView(APIView):
     
 class FindAttractionsView(APIView):
     queryset = Attraction.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         city = request.data.get('city')

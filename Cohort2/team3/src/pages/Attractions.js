@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import AuthContext from "auth/auth-context.js";
+import tw from "twin.macro";
 
 export default ({ city, itineraryId }) => {
   const authCtx = useContext(AuthContext);

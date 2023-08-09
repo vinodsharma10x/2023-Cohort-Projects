@@ -78,13 +78,15 @@ const Hero = () => {
             <br />
             anywhere around the world
           </Heading>
-          <PrimaryAction>
-            <a href="/search">Create New Travel Plan</a>
-          </PrimaryAction>
-          <PrimaryAction>
-            {/* does not work right now */}
-            <a href="/plans">View Past Plans</a>
-          </PrimaryAction>
+
+          <a href="/search">
+            <PrimaryAction>Create New Travel Plan</PrimaryAction>
+          </a>
+
+          {/* does not work right now */}
+          <a href="/plans">
+            <PrimaryAction>View Past Plans</PrimaryAction>
+          </a>
         </Content>
       </HeroContainer>
     </Container>

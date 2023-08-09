@@ -18,9 +18,12 @@ class Attraction(models.Model):
     start_datetime = models.DateTimeField()
 
 class Flight(models.Model):
+    FLIGHT_TYPES = [("departing", "departing"),("return", "return") ]
+    
     itinerary = models.ForeignKey("Itinerary", related_name="flights", on_delete=models.CASCADE)
     origin_airport_code = models.CharField(max_length=3)
     destination_airport_code = models.CharField(max_length=3)
     departure_datetime = models.DateTimeField()
     arrival_datetime = models.DateTimeField()
     airline = models.CharField(max_length=200)
+    type = models.CharField(max_length=10, choices=FLIGHT_TYPES)
