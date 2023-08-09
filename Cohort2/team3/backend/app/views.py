@@ -116,6 +116,7 @@ class FlightViewSet(viewsets.ModelViewSet):
         user = self.request.user
         serializer = self.get_serializer(data=request.data)
 
+        print(request.data)
         serializer.is_valid(raise_exception=True)
         owner_of_itinerary = serializer.validated_data['itinerary'].owner
         if user == owner_of_itinerary:
@@ -194,13 +195,15 @@ class FindFlightsView(APIView):
                 destination_airport_code = flight_plans['departure_plans'][i][flight]['arrival']['airport']['code']
                 arrival_datetime = flight_plans['departure_plans'][i][flight]['arrival']['datetime']['date_time']
                 airline = flight_plans['departure_plans'][i][flight]['info']['marketing_airline']
+                city = flight_plans['departure_plans'][i][flight]['arrival']['airport']['city']
 
                 _flights.append(
                     {'origin_airport_code': origin_airport_code, 
                      'departure_datetime': departure_datetime, 
                      'destination_airport_code': destination_airport_code, 
                      'arrival_datetime': arrival_datetime,
-                     'airline': airline})
+                     'airline': airline,
+                     'city': city})
                 
             flights_trimmed['departure_flight_plans'].append(_flights)
 

@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 import AuthContext from "auth/auth-context.js"
 //eslint-disable-next-line
 import { css } from "styled-components/macro";
-
 import Header from "../headers/light.js";
 
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-1.svg";
@@ -39,15 +40,15 @@ const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
   ${tw`pointer-events-none opacity-5 absolute left-0 bottom-0 h-64 w-64 transform -translate-x-2/3 -z-10`}
 `;
 
-export default ({ setDepartureFlightData }) => {
+export default ({ setDepartureFlightData, setItineraryId, setReturnFlightData, setCity }) => {
   const authCtx = useContext(AuthContext);
-  const [itineraryId, setItineraryId] = useState('');
   const [itinerary, setItinerary] = useState('');
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [departureDate, setDepartureDate] = useState('');
   const [returnDate, setArrivalDate] = useState('');
-  const [returnFlightData, setReturnFlightData] = useState([]);
+
+  const navigate = useNavigate();
 
   function handleChange (event) {
     switch(event.target.id) {
@@ -91,6 +92,7 @@ export default ({ setDepartureFlightData }) => {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Token " + authCtx.token
       },
       body: JSON.stringify({
         origin: origin,
@@ -101,10 +103,13 @@ export default ({ setDepartureFlightData }) => {
     })
     .then(data => data.json())
     .then(data => {
-      console.log(data);
       setDepartureFlightData(data.data.departure_flight_plans.filter(el => el.length === 1));
       setReturnFlightData(data.data.return_flight_plans.filter(el => el.length === 1));
+      setCity(data.data.departure_flight_plans[0][0].city);
+      console.log(JSON.stringify(data.data.departure_flight_plans[0][0]))
     });
+
+    navigate("/flightsDepartures");
   }
 
   return (
@@ -130,9 +135,11 @@ export default ({ setDepartureFlightData }) => {
               <input type="date" id="returnDate" onChange={handleChange}/>
             </Actions>
             <Button>
-              <a href="/flightsDepartures">
-                <button onClick={handleClick}>Search</button>
-              </a>
+              <button onClick={handleClick}>
+                {/* <Link to="/flightsDepartures"> */}
+                  Search
+                {/* </Link> */}
+              </button>
             </Button>
           </LeftColumn>
           <RightColumn>

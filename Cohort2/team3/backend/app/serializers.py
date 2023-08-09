@@ -5,7 +5,7 @@ from .models import Itinerary, Attraction, Flight
 class FlightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flight
-        fields = ['id', 'itinerary', 'origin_airport_code', 'destination_airport_code', 'departure_datetime', 'arrival_datetime']
+        fields = ['id', 'itinerary', 'origin_airport_code', 'destination_airport_code', 'departure_datetime', 'arrival_datetime', 'airline']
 
 
 class AttractionSerializer(serializers.ModelSerializer):

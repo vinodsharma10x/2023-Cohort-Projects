@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
+import DataGrid from "components/DataGrid";
 
-export default ({ departureFlightData }) => {
-  console.log(departureFlightData);
+export default ({ departureFlightData, itineraryId }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    departureFlightData.length === 0 ? setIsLoading(true) : setIsLoading(false);
+  }, [departureFlightData])
+
   return (
     <AnimationRevealPage>
-      <div>Data should be shown here</div>
-      {departureFlightData.map(el => <div>{el[0].origin_airport_code}</div>)}
+
+      {
+        isLoading ? 
+        <div>Loading data...</div> : 
+        <DataGrid departureFlightData={departureFlightData} itineraryId={itineraryId}/>
+      }
     </AnimationRevealPage>
   );
 };
