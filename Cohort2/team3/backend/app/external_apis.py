@@ -4,7 +4,8 @@ import json
 config = {
   "api": {
     "flights": {
-      "api_key": "e5271c74c7msh336578886b36ce5p1b7fb3jsnf74ff4318717",
+      # "api_key": "e5271c74c7msh336578886b36ce5p1b7fb3jsnf74ff4318717",
+      "api_key": "cb67d034bdmsh90789df0f78a879p163c14jsn5f70d7a4a62d",
       "api_host": "priceline-com-provider.p.rapidapi.com"
     },
     "attractions": {
@@ -35,7 +36,7 @@ class FlightsAPI():
         url = "https://priceline-com-provider.p.rapidapi.com/v2/flight/roundTrip"
 
         querystring = {"sid": "iSiX639", "adults": "1", "departure_date": departure_date,
-                       "destination_airport_code": destination_airport_code, "origin_airport_code": origin_airport_code}
+                       "destination_airport_code": destination_airport_code, "origin_airport_code": origin_airport_code, "results_per_page":"8"}
 
         headers = {
             "X-RapidAPI-Key": config['api']['flights']['api_key'],

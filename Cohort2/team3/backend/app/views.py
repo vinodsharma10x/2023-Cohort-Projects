@@ -15,11 +15,10 @@ User = CustomUser
 
 # Itinerary views
 
-
 class ItineraryViewSet(viewsets.ModelViewSet):
     queryset = Itinerary.objects.all()
     serializer_class = serializers.ItinerarySerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -30,14 +29,24 @@ class ItineraryViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         if self.request.user.is_authenticated:
             serializer.save(owner=self.request.user)
-        else:
-            serializer.save()
 
+    def create(self, request, *args, **kwargs):
+        user = self.request.user
+        serializer = self.get_serializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+        new_itinerary = request.data.get('name')
+        print(new_itinerary)
+        if len(self.queryset.filter(name=new_itinerary)) == 0:
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response({"message": "An itinerary with this name already exists for this user"}, status=status.HTTP_400_BAD_REQUEST)
 
 class AttractionViewSet(viewsets.ModelViewSet):
     queryset = Attraction.objects.all()
     serializer_class = serializers.AttractionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -92,7 +101,7 @@ class AttractionViewSet(viewsets.ModelViewSet):
 class FlightViewSet(viewsets.ModelViewSet):
     queryset = Flight.objects.all()
     serializer_class = serializers.FlightSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -107,6 +116,7 @@ class FlightViewSet(viewsets.ModelViewSet):
         user = self.request.user
         serializer = self.get_serializer(data=request.data)
 
+        print(request.data)
         serializer.is_valid(raise_exception=True)
         owner_of_itinerary = serializer.validated_data['itinerary'].owner
         if user == owner_of_itinerary:
@@ -143,11 +153,11 @@ class FlightViewSet(viewsets.ModelViewSet):
 # External APIs
 class FindFlightsView(APIView):
     queryset = Flight.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request):
-        origin_city = request.data.get('origin')
-        destination_city = request.data.get('destination')
+        origin_city = request.data.get('origin').upper()
+        destination_city = request.data.get('destination').upper()
         departure_date = request.data.get('departure_date')
         return_date = request.data.get('return_date')
 
@@ -159,10 +169,18 @@ class FindFlightsView(APIView):
         # Get departure flight plans
         departure_req = FlightsAPI.get_flights(
             origin_city, destination_city, departure_date)
+        
+        
         if not departure_req.ok:
             return Response({"message": "Bad request"}, status=status.HTTP_400_BAD_REQUEST)
-
+        
         departure_results = departure_req.json()
+        if departure_results['getAirFlightRoundTrip'].get('error'):
+            if departure_results['getAirFlightRoundTrip'].get('error').get('status'):
+                error = departure_results['getAirFlightRoundTrip'].get('error').get('status')
+                return Response({"message": error}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "No flights found"}, status=status.HTTP_200_OK)
+            
         departure_results_full = departure_results['getAirFlightRoundTrip']['results']['result']['itinerary_data']
         
         flight_plans = {'departure_plans': [departure_results_full[itinerary]['slice_data']
@@ -177,13 +195,15 @@ class FindFlightsView(APIView):
                 destination_airport_code = flight_plans['departure_plans'][i][flight]['arrival']['airport']['code']
                 arrival_datetime = flight_plans['departure_plans'][i][flight]['arrival']['datetime']['date_time']
                 airline = flight_plans['departure_plans'][i][flight]['info']['marketing_airline']
+                city = flight_plans['departure_plans'][i][flight]['arrival']['airport']['city']
 
                 _flights.append(
                     {'origin_airport_code': origin_airport_code, 
                      'departure_datetime': departure_datetime, 
                      'destination_airport_code': destination_airport_code, 
                      'arrival_datetime': arrival_datetime,
-                     'airline': airline})
+                     'airline': airline,
+                     'city': city})
                 
             flights_trimmed['departure_flight_plans'].append(_flights)
 
@@ -223,7 +243,7 @@ class FindFlightsView(APIView):
     
 class FindAttractionsView(APIView):
     queryset = Attraction.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request):
         city = request.data.get('city')
@@ -244,55 +264,3 @@ class FindAttractionsView(APIView):
         attraction_data = attraction_req.json()
 
         return Response({"data": attraction_data}, status=status.HTTP_200_OK)
-
-# no longer using since it won't work with frontend setup
-# class FindFlightsView(APIView):
-#     queryset = Flight.objects.all()
-#     permission_classes = [IsAuthenticated]
-
-#     def post(self, request):
-#         origin_city = request.data.get('origin')
-#         destination_city = request.data.get('destination')
-#         departure_date = request.data.get('departure_date')
-#         return_date = request.data.get('return_date')
-
-#         if origin_city is None or destination_city is None or departure_date is None or return_date is None:
-#             return Response({"message": "Origin city, destination city, and date are required."}, status=status.HTTP_400_BAD_REQUEST)
-
-#         r = FlightsAPI.get_airports_near_city(origin_city)
-#         if not r.ok:
-#             return Response({"message": "API service currently unavailable"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-
-#         origin_airport_data = r.json()
-#         if len(origin_airport_data) < 1:
-#             return Response({"message": f'No airports found for city {origin_city}'}, status=status.HTTP_400_BAD_REQUEST)
-
-#         origin_airports = [item['id'] for item in origin_airport_data if item['subType'] == 'AIRPORT']
-
-#         r = FlightsAPI.get_airports_near_city(destination_city)
-#         if not r.ok:
-#             return Response({"message": "Service currently unavailable"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-
-#         destination_airport_data = r.json()
-#         if len(destination_airport_data) < 1:
-#             return Response({"message": f'No airports found for city {destination_city}'}, status=status.HTTP_400_BAD_REQUEST)
-
-#         destination_airports = [item['id'] for item in destination_airport_data if item['subType'] == 'AIRPORT']
-
-#         for origin_airport_code in origin_airports:
-#             for destination_airport_code in destination_airports:
-#                 r = FlightsAPI.get_flights(departure_date, return_date, origin_airport_code, destination_airport_code)
-#                 print(departure_date, return_date, origin_airport_code, destination_airport_code)
-#                 print(r)
-#                 print(r.status_code)
-#                 print(r.text)
-#                 print('--END--')
-
-#         origin_flights = []
-#         return_flights = []
-
-
-#         return Response({"data": destination_airports})
-
-
-

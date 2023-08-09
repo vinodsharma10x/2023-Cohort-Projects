@@ -15,9 +15,9 @@ class GoogleLogin(SocialLoginView):
 class Callback(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        print(request)
-        print(request.data)
-        print(request.headers)
-        print(request.user)
-        return Response({'test': '123'})
+    # def get(self, request):
+    #     print(request)
+    #     print(request.data)
+    #     print(request.headers)
+    #     print(request.user)
+    #     return Response({'test': '123'})
