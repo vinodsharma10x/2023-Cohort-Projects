@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import DataGrid2 from "components/DataGrid2";
 
-export default ({ returnFlightData, itineraryId }) => {
+export default ({ returnFlightData, itineraryId, setItineraryId }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default ({ returnFlightData, itineraryId }) => {
       {
         isLoading ? 
         <div>Loading data...</div> : 
-        <DataGrid2 returnFlightData={returnFlightData} itineraryId={itineraryId}/>
+        <DataGrid2 returnFlightData={returnFlightData} itineraryId={itineraryId} setItineraryId={setItineraryId}/>
       }
     </AnimationRevealPage>
   );

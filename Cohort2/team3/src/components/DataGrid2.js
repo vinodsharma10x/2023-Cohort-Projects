@@ -13,14 +13,14 @@ const TableTitleSmall = tw.td`text-lg text-center`;
 const TableData = tw.td`px-4 py-4 text-center`;
 const TableRow = tw.tr`hover:bg-[#edf2f7] shadow`;
 
-export default ({ returnFlightData, itineraryId }) => {
+export default ({ returnFlightData, itineraryId, setItineraryId }) => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
 
   function handleClick(event){
     event.preventDefault();
+    console.log(itineraryId);
     const data = returnFlightData[event.target.id][0];
-    console.log(data);
     fetch("http://localhost:8000/api/v1/flights/", {
       method: "POST",
       mode: "cors",
@@ -37,7 +37,7 @@ export default ({ returnFlightData, itineraryId }) => {
         airline: data.airline,
         type: 'return'
       }),
-    });
+    })
 
     navigate("/attractions")
   }
@@ -48,7 +48,7 @@ export default ({ returnFlightData, itineraryId }) => {
         <Table>
           <TableHead>
             <tr>
-              <TableTitle colSpan={5}>Itinerary</TableTitle>
+              <TableTitle colSpan={5}>{itineraryId.name}</TableTitle>
             </tr>
             <tr>
               <TableTitleSmall colSpan={5}>Select your return flight</TableTitleSmall>

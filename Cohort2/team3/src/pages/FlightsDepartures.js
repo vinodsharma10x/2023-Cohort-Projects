@@ -4,7 +4,7 @@ import DataGrid from "components/DataGrid";
 
 export default ({ departureFlightData, itineraryId }) => {
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log(itineraryId);
   useEffect(() => {
     departureFlightData.length === 0 ? setIsLoading(true) : setIsLoading(false);
   }, [departureFlightData])

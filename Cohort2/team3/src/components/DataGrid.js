@@ -18,7 +18,7 @@ const TableRow = tw.tr`hover:bg-[#edf2f7] shadow`;
 export default ({ departureFlightData, itineraryId }) => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
-
+  console.log(itineraryId);
   function handleClick(event) {
     event.preventDefault();
     const data = departureFlightData[event.target.id][0];
@@ -50,7 +50,7 @@ export default ({ departureFlightData, itineraryId }) => {
         <Table>
           <TableHead>
             <tr>
-              <TableTitle colSpan={5}>Name</TableTitle>
+              <TableTitle colSpan={5}>{itineraryId.name}</TableTitle>
             </tr>
             <tr>
               <TableTitleSmall colSpan={5}>Select your departing flight</TableTitleSmall>

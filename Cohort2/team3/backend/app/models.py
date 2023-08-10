@@ -15,7 +15,6 @@ class Itinerary(models.Model):
 class Attraction(models.Model):
     name = models.CharField(max_length=300)
     itinerary = models.ForeignKey("Itinerary", related_name="attractions", on_delete=models.CASCADE)
-    start_datetime = models.DateTimeField()
 
 class Flight(models.Model):
     FLIGHT_TYPES = [("departing", "departing"),("return", "return") ]

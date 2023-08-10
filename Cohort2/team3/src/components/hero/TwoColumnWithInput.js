@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
-import AuthContext from "auth/auth-context.js"
+import AuthContext from "auth/auth-context.js";
 //eslint-disable-next-line
 import { css } from "styled-components/macro";
 import Header from "../headers/light.js";
@@ -40,74 +40,85 @@ const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
   ${tw`pointer-events-none opacity-5 absolute left-0 bottom-0 h-64 w-64 transform -translate-x-2/3 -z-10`}
 `;
 
-export default ({ setDepartureFlightData, setItineraryId, setReturnFlightData, setCity }) => {
+export default ({
+  setDepartureFlightData,
+  setItineraryId,
+  setReturnFlightData,
+  setCity,
+}) => {
   const authCtx = useContext(AuthContext);
-  const [itinerary, setItinerary] = useState('');
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
-  const [departureDate, setDepartureDate] = useState('');
-  const [returnDate, setArrivalDate] = useState('');
+  const [itinerary, setItinerary] = useState("");
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [returnDate, setArrivalDate] = useState("");
 
   const navigate = useNavigate();
 
-  function handleChange (event) {
-    switch(event.target.id) {
-      case 'itinerary' :
+  function handleChange(event) {
+    switch (event.target.id) {
+      case "itinerary":
         setItinerary(event.target.value);
         break;
-      case 'origin' :
+      case "origin":
         setOrigin(event.target.value);
         break;
-      case 'destination' :
+      case "destination":
         setDestination(event.target.value);
         break;
-      case 'departureDate' :
+      case "departureDate":
         setDepartureDate(event.target.value);
         break;
-      case 'returnDate' :
+      case "returnDate":
         setArrivalDate(event.target.value);
         break;
     }
   }
 
-  function handleClick (e) {
+  function handleClick(e) {
     e.preventDefault();
     // send request to API/backend to create itinerary, currently not working, needs user id
-    fetch('http://localhost:8000/api/v1/itineraries/', {
-      method: 'POST',
+    fetch("http://localhost:8000/api/v1/itineraries/", {
+      method: "POST",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Token " + authCtx.token
+        Authorization: "Token " + authCtx.token,
       },
       body: JSON.stringify({
-        name: itinerary
-      })
+        name: itinerary,
+      }),
     })
-    .then(data => data.json())
-    .then(data => setItineraryId(data));
+      .then((data) => data.json())
+      .then((data) => {
+        setItineraryId(data);
+      });
 
-    fetch('http://localhost:8000/api/v1/ext/flights/', {
-      method: 'POST',
+    fetch("http://localhost:8000/api/v1/ext/flights/", {
+      method: "POST",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Token " + authCtx.token
+        Authorization: "Token " + authCtx.token,
       },
       body: JSON.stringify({
         origin: origin,
         destination: destination,
         departure_date: departureDate,
-        return_date: returnDate
-      })
+        return_date: returnDate,
+      }),
     })
-    .then(data => data.json())
-    .then(data => {
-      setDepartureFlightData(data.data.departure_flight_plans.filter(el => el.length === 1));
-      setReturnFlightData(data.data.return_flight_plans.filter(el => el.length === 1));
-      setCity(data.data.departure_flight_plans[0][0].city);
-      console.log(JSON.stringify(data.data.departure_flight_plans[0][0]))
-    });
+      .then((data) => data.json())
+      .then((data) => {
+        setDepartureFlightData(
+          data.data.departure_flight_plans.filter((el) => el.length === 1)
+        );
+        setReturnFlightData(
+          data.data.return_flight_plans.filter((el) => el.length === 1)
+        );
+        setCity(data.data.departure_flight_plans[0][0].city);
+        console.log(JSON.stringify(data.data.departure_flight_plans[0][0]));
+      });
 
     navigate("/flightsDepartures");
   }
@@ -121,23 +132,40 @@ export default ({ setDepartureFlightData, setItineraryId, setReturnFlightData, s
             <Heading>
               Oh, the places <span tw="text-primary-500">you'll go...</span>
             </Heading>
-            
+
             <Actions>
               <Paragraph>Give your itinerary a name!</Paragraph>
-              <input type="text" placeholder="My Great Travel Plan" id="itinerary" onChange={handleChange}/>
+              <input
+                type="text"
+                placeholder="My Great Travel Plan"
+                id="itinerary"
+                onChange={handleChange}
+              />
               <Paragraph>Search for your airport here:</Paragraph>
-              <input type="text" placeholder="Where are you flying out of?" id="origin" onChange={handleChange}/>
-              <Paragraph>Search for your dream location's airport here:</Paragraph>
-              <input type="text" placeholder="Where are you headed?" id="destination" onChange={handleChange}/>
+              <input
+                type="text"
+                placeholder="Where are you flying out of?"
+                id="origin"
+                onChange={handleChange}
+              />
+              <Paragraph>
+                Search for your dream location's airport here:
+              </Paragraph>
+              <input
+                type="text"
+                placeholder="Where are you headed?"
+                id="destination"
+                onChange={handleChange}
+              />
               <Paragraph>Departure Date:</Paragraph>
-              <input type="date" id="departureDate" onChange={handleChange}/>
+              <input type="date" id="departureDate" onChange={handleChange} />
               <Paragraph>Return Date:</Paragraph>
-              <input type="date" id="returnDate" onChange={handleChange}/>
+              <input type="date" id="returnDate" onChange={handleChange} />
             </Actions>
             <Button>
               <button onClick={handleClick}>
                 {/* <Link to="/flightsDepartures"> */}
-                  Search
+                Search
                 {/* </Link> */}
               </button>
             </Button>

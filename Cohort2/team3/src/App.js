@@ -24,8 +24,8 @@ const App = () => {
   const authCtx = useContext(AuthContext);
   const [departureFlightData, setDepartureFlightData] = useState([]);
   const [returnFlightData, setReturnFlightData] = useState([]);
-  const [city, setCity] = useState('');
-  const [itineraryId, setItineraryId] = useState('');
+  const [city, setCity] = useState("");
+  const [itineraryId, setItineraryId] = useState("");
 
   return (
     <GoogleOAuthProvider clientId="32101593679-er9qgunfqs07mml1sn113kch610knpah.apps.googleusercontent.com">
@@ -52,7 +52,12 @@ const App = () => {
               <Route
                 path="/search"
                 element={
-                  <Search setDepartureFlightData={setDepartureFlightData} setReturnFlightData={setReturnFlightData} setCity={setCity} setItineraryId={setItineraryId} />
+                  <Search
+                    setDepartureFlightData={setDepartureFlightData}
+                    setReturnFlightData={setReturnFlightData}
+                    setCity={setCity}
+                    setItineraryId={setItineraryId}
+                  />
                 }
               />
             </>
@@ -61,34 +66,33 @@ const App = () => {
             <>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
-              <Route
-                path="/search"
-                element={
-                  <Navigate to="/login" />
-                }
-              />
+              <Route path="/search" element={<Navigate to="/login" />} />
             </>
           )}
 
           <Route
             path="/flightsDepartures"
             element={
-              <FlightsDepartures departureFlightData={departureFlightData} itineraryId={itineraryId} />
+              <FlightsDepartures
+                departureFlightData={departureFlightData}
+                itineraryId={itineraryId}
+              />
             }
           />
 
           <Route
             path="/returnFlights"
             element={
-              <ReturnFlights returnFlightData={returnFlightData} itineraryId={itineraryId} />
+              <ReturnFlights
+                returnFlightData={returnFlightData}
+                itineraryId={itineraryId}
+              />
             }
           />
 
           <Route
             path="/attractions"
-            element={
-              <Attractions city={city} itinerayId={itineraryId}/>
-            }
+            element={<Attractions city={city} itineraryId={itineraryId} />}
           />
         </Routes>
       </Router>

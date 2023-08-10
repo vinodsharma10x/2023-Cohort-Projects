@@ -59,10 +59,10 @@ class AttractionViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         user = self.request.user
-        serializer = self.get_serializer(data=request.data)
-
-        serializer.is_valid(raise_exception=True)
-        owner_of_itinerary = serializer.validated_data['itinerary'].owner
+        serializer = self.get_serializer(data=request.data, many=True)
+        serializer.is_valid(raise_exception=False)
+        print(serializer.data)
+        owner_of_itinerary = serializer.validated_data[0]['itinerary'].owner
         if user == owner_of_itinerary:
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
