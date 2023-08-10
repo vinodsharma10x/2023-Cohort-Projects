@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import GlobalStyles from "styles/GlobalStyles";
-
+import MyItineraries from "pages/MyItineraries";
 import ComponentRenderer from "ComponentRenderer.js";
 
 import {
@@ -93,6 +93,10 @@ const App = () => {
           <Route
             path="/attractions"
             element={<Attractions city={city} itineraryId={itineraryId} />}
+          />
+            <Route
+            path="/my-itineraries"
+            element={<MyItineraries/>}
           />
         </Routes>
       </Router>
