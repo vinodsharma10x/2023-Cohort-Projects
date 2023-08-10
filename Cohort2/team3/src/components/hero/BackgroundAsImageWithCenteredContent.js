@@ -83,8 +83,7 @@ const Hero = () => {
             <PrimaryAction>Create New Travel Plan</PrimaryAction>
           </a>
 
-          {/* does not work right now */}
-          <a href="/plans">
+          <a href="/my-itineraries">
             <PrimaryAction>View Past Plans</PrimaryAction>
           </a>
         </Content>

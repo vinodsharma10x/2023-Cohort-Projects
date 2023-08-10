@@ -91,7 +91,7 @@ export default ({
 
   const loggedOutLinks = [
     <NavLinks key={1}>
-      <NavLink onClick={signOut}>Sign Out</NavLink>
+      <NavLink href={"/login"}>Sign In</NavLink>
     </NavLinks>,
   ];
 
