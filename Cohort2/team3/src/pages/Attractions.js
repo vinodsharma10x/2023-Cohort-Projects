@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import AuthContext from "auth/auth-context.js";
 import tw from "twin.macro";
@@ -17,9 +18,8 @@ const RemoveButton = tw.button`bg-red-300 hover:bg-red-500 px-4 py-2 rounded tex
 const DoneButton = tw.button`bg-white hover:bg-primary-500 hover:text-white rounded text-black mt-4 px-4 py-2`;
 
 export default ({ city, itineraryId }) => {
-  console.log(itineraryId);
-  console.log(city);
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
   const [attractionData, setAttractionData] = useState([]);
   const [selectedAttractions, setSelectedAttractions] = useState([]);
 
@@ -65,7 +65,7 @@ export default ({ city, itineraryId }) => {
     console.log(itineraryId);
     let attractionsToSubmit = selectedAttractions.map((attraction) => ({
       name: attraction.properties.name,
-      itinerary: itineraryId
+      itinerary: itineraryId.id
     }));
     console.log(attractionsToSubmit);
     fetch("http://localhost:8000/api/v1/attractions/", {
@@ -77,6 +77,8 @@ export default ({ city, itineraryId }) => {
       },
       body: JSON.stringify(attractionsToSubmit),
     }).then((data) => data.json());
+
+    navigate('/itinerary')
   };
 
   return (

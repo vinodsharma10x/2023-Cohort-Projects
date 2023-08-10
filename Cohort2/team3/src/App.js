@@ -17,6 +17,7 @@ import Home from "pages/Home.js";
 import FlightsDepartures from "pages/FlightsDepartures";
 import ReturnFlights from "pages/ReturnFlights";
 import Attractions from "pages/Attractions";
+import Itinerary from "pages/Itinerary";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import AuthContext from "auth/auth-context";
 
@@ -93,6 +94,11 @@ const App = () => {
           <Route
             path="/attractions"
             element={<Attractions city={city} itineraryId={itineraryId} />}
+          />
+
+<Route
+            path="/itinerary"
+            element={<Itinerary itineraryId={itineraryId} />}
           />
         </Routes>
       </Router>
